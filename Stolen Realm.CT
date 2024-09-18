@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"Money"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Stolen Realm.exe
+  Version: 
+  Date   : 2024-09-18
+  Author : skdia
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,F3 0F 11 68 18 B8 01 00 00 00 E9 C9) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov rcx, 0x000000004B18967F
+  mov qword ptr [rbp-000001C8], rcx
+  movss xmm5,[rbp-000001C8]
+  movss [rax+18],xmm5
+  jmp return
+
+INJECT:
+  jmp newmem
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db F3 0F 11 68 18
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 12898006E72
+
+12898006E47: 48 63 C6                 - movsxd  rax,esi
+12898006E4A: 41 39 47 18              - cmp [r15+18],eax
+12898006E4E: 0F 86 2D 08 00 00        - jbe 12898007681
+12898006E54: 48 6B C8 1C              - imul rcx,rax,1C
+12898006E58: 49 8B C7                 - mov rax,r15
+12898006E5B: 48 03 C1                 - add rax,rcx
+12898006E5E: 48 83 C0 20              - add rax,20
+12898006E62: F3 0F 10 85 38 FE FF FF  - movss xmm0,[rbp-000001C8]
+12898006E6A: F3 0F 5A C0              - cvtss2sd xmm0,xmm0
+12898006E6E: F2 0F 5A E8              - cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+12898006E72: F3 0F 11 68 18           - movss [rax+18],xmm5
+// ---------- DONE INJECTING  ----------
+12898006E77: B8 01 00 00 00           - mov eax,00000001
+12898006E7C: E9 C9 05 00 00           - jmp 1289800744A
+12898006E81: 0F B6 85 30 FE FF FF     - movzx eax,byte ptr [rbp-000001D0]
+12898006E88: 83 F8 02                 - cmp eax,02
+12898006E8B: 0F 84 DB 05 00 00        - je 1289800746C
+12898006E91: 33 C0                    - xor eax,eax
+12898006E93: E9 B2 05 00 00           - jmp 1289800744A
+12898006E98: 48 63 C6                 - movsxd  rax,esi
+12898006E9B: 41 39 47 18              - cmp [r15+18],eax
+12898006E9F: 0F 86 D5 07 00 00        - jbe 1289800767A
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"Skill"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Stolen Realm.exe
+  Version: 
+  Date   : 2024-09-18
+  Author : skdia
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,89 86 B0 0A 00 00 C6) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rsi+00000AB0],#1000
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 86 B0 0A 00 00
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 17B210CB30B
+
+17B210CB2E8: 48 8B 65 D8                    - mov rsp,[rbp-28]
+17B210CB2EC: C3                             - ret 
+17B210CB2ED: 48 8B CE                       - mov rcx,rsi
+17B210CB2F0: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+17B210CB2F5: 90                             - nop 
+17B210CB2F6: 49 BB 30 EF DF 1F 7B 01 00 00  - mov r11,0000017B1FDFEF30
+17B210CB300: 41 FF D3                       - call r11
+17B210CB303: FF C8                          - dec eax
+17B210CB305: 03 45 B8                       - add eax,[rbp-48]
+17B210CB308: 41 2B C7                       - sub eax,r15d
+// ---------- INJECTING HERE ----------
+17B210CB30B: 89 86 B0 0A 00 00              - mov [rsi+00000AB0],eax
+// ---------- DONE INJECTING  ----------
+17B210CB311: C6 86 B4 0A 00 00 00           - mov byte ptr [rsi+00000AB4],00
+17B210CB318: 48 63 86 B0 0A 00 00           - movsxd  rax,dword ptr [rsi+00000AB0]
+17B210CB31F: 48 8B 75 E8                    - mov rsi,[rbp-18]
+17B210CB323: 4C 8B 75 F0                    - mov r14,[rbp-10]
+17B210CB327: 4C 8B 7D F8                    - mov r15,[rbp-08]
+17B210CB32B: 48 8D 65 00                    - lea rsp,[rbp+00]
+17B210CB32F: 5D                             - pop rbp
+17B210CB330: C3                             - ret 
+17B210CB331: BA DA 00 00 00                 - mov edx,000000DA
+17B210CB336: B9 46 01 00 00                 - mov ecx,00000146
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
